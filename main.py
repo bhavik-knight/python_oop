@@ -24,42 +24,43 @@ def main():
             cars[words[2]] = Car(words[2], model)
         # REFUEL: Refuel the car tank to the full capacity
         elif words[0] == "REFILL":
-            car_plate = cars[words[1]]
-            car_plate.set_remaining_fuel(
-                car_plate.get_car_model().get_tank_capacity()
+            trip_car = cars[words[1]]
+            trip_car.set_remaining_fuel(
+                trip_car.get_car_model().get_tank_capacity()
             )
         # TRIP: Calculate and check if car is able to make a trip of not
         else:
-            # variable to hold car object
-            car_plate = None
+            # get the car of given plate_number from our inventory of cars
+            trip_car = None
+            for plate_number, car in cars.items():
+                if plate_number == words[1]:
+                    trip_car = car
 
-            # try to check if we have this plate_number in our cars inventory
-            try:
-                car_plate = cars[words[1]]
-
-            # if we don't have this car, we cannto make this trip
-            except KeyError:
+            # if trip car is not set to anything, means we don't have that car, we cannot make the trip
+            # check the next trip in the case immediately (read the next input)
+            if trip_car == None:
                 print(f"Not enough fuel for {words[1]}")
+                continue
 
-            # if we have the car, then only we can make the trip
+            # otherwise we have found the car
+            distance: int = int(words[2])
+
+            # calculate the fuel consumtion for the trip
+            fuel_consumption = \
+                (trip_car.get_car_model().get_fuel_efficiency() * distance) / 100
+
+            # if not enough fuel, we cannot make a trip
+            if trip_car.get_remaining_fuel() < fuel_consumption:
+                print(f"Not enough fuel for {words[1]}")
             else:
-                distance: int = int(words[2])
-
-                fuel_consumption = \
-                    (car_plate.get_car_model().get_fuel_efficiency() * distance) / 100
-
-                # if not enough fuel, we cannot make a trip
-                if car_plate.get_remaining_fuel() < fuel_consumption:
-                    print(f"Not enough fuel for {words[1]}")
-                else:
-                    # trip success, calculate the remaining fuel
-                    car_plate.set_remaining_fuel(
-                        car_plate.get_remaining_fuel() - fuel_consumption
-                    )
-                    print(
-                        f"Trip completed successfulluy for {car_plate.get_plate_number()}"
-                        f", Remaining Fuel: {car_plate.get_remaining_fuel()}"
-                    )
+                # trip success, calculate the remaining fuel
+                trip_car.set_remaining_fuel(
+                    trip_car.get_remaining_fuel() - fuel_consumption
+                )
+                print(
+                    f"Trip completed successfulluy for {trip_car.get_plate_number()}"
+                    f", Remaining Fuel: {trip_car.get_remaining_fuel()}"
+                )
 
 
 if __name__ == "__main__":
