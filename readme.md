@@ -11,6 +11,6 @@
 ## Main - Driver Code
 - Checks if car can make a trip of not
 
-## instruction to run 
-### `<input file>` can be anything from `ip1.txt` through `ip5.txt`
+## Instruction to run the code
+`<input file>` can be anything from `ip1.txt` through `ip5.txt`<br>
 ```python main.py <input_file>```
