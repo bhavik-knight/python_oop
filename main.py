@@ -11,23 +11,27 @@ def main():
         if line.strip() == "FINISH":
             break
 
-        words = line.strip().split()
         # check input for different starting words
+        words = line.strip().split()
+
         # MODEL: Create the object of CarModel class, and add to models
         if words[0] == "MODEL":
             models[words[1]] = CarModel(
                 words[1], float(words[2]), float(words[3])
             )
+
         # CAR: Create the object of Car class, and add to cars
         elif words[0] == "CAR":
             model = models[words[1]]
             cars[words[2]] = Car(words[2], model)
+
         # REFUEL: Refuel the car tank to the full capacity
         elif words[0] == "REFILL":
             trip_car = cars[words[1]]
             trip_car.set_remaining_fuel(
                 trip_car.get_car_model().get_tank_capacity()
             )
+
         # TRIP: Calculate and check if car is able to make a trip of not
         else:
             # let's fetch the car for our trip from the car inventory
