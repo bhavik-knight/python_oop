@@ -1,4 +1,4 @@
-# OOP Concepts | Pythont
+# OOP Concepts | Python
 ## CarModel - A template of the car's model 
 - model name (string)
 - fuel efficiency (float)

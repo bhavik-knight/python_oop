@@ -18,16 +18,19 @@ def main():
             models[words[1]] = CarModel(
                 words[1], float(words[2]), float(words[3])
             )
+
         # CAR: Create the object of Car class, and add to cars
         elif words[0] == "CAR":
             model = models[words[1]]
             cars[words[2]] = Car(words[2], model)
+
         # REFUEL: Refuel the car tank to the full capacity
         elif words[0] == "REFILL":
             trip_car = cars[words[1]]
             trip_car.set_remaining_fuel(
                 trip_car.get_car_model().get_tank_capacity()
             )
+
         # TRIP: Calculate and check if car is able to make a trip of not
         else:
             # get the car of given plate_number from our inventory of cars
