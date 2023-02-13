@@ -24,18 +24,18 @@ def main():
             cars[words[2]] = Car(words[2], model)
         # REFUEL: Refuel the car tank to the full capacity
         elif words[0] == "REFILL":
-            car_plate = cars[words[1]]
-            car_plate.set_remaining_fuel(
-                car_plate.get_car_model().get_tank_capacity()
+            trip_car = cars[words[1]]
+            trip_car.set_remaining_fuel(
+                trip_car.get_car_model().get_tank_capacity()
             )
         # TRIP: Calculate and check if car is able to make a trip of not
         else:
-            # variable to hold car object
-            car_plate = None
+            # let's fetch the car for our trip from the car inventory
+            trip_car = None
 
             # try to check if we have this plate_number in our cars inventory
             try:
-                car_plate = cars[words[1]]
+                trip_car = cars[words[1]]
 
             # if we don't have this car, we cannto make this trip
             except KeyError:
@@ -45,20 +45,20 @@ def main():
             else:
                 distance: int = int(words[2])
 
-                fuel_consumption = \
-                    (car_plate.get_car_model().get_fuel_efficiency() * distance) / 100
+                fuel_consumption: float = \
+                    (trip_car.get_car_model().get_fuel_efficiency() * distance) / 100
 
                 # if not enough fuel, we cannot make a trip
-                if car_plate.get_remaining_fuel() < fuel_consumption:
+                if trip_car.get_remaining_fuel() < fuel_consumption:
                     print(f"Not enough fuel for {words[1]}")
                 else:
                     # trip success, calculate the remaining fuel
-                    car_plate.set_remaining_fuel(
-                        car_plate.get_remaining_fuel() - fuel_consumption
+                    trip_car.set_remaining_fuel(
+                        trip_car.get_remaining_fuel() - fuel_consumption
                     )
                     print(
-                        f"Trip completed successfulluy for {car_plate.get_plate_number()}"
-                        f", Remaining Fuel: {car_plate.get_remaining_fuel()}"
+                        f"Trip completed successfulluy for {trip_car.get_plate_number()}"
+                        f", Remaining Fuel: {trip_car.get_remaining_fuel()}"
                     )
 
 
